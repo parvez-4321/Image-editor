@@ -30,7 +30,7 @@ A professional-grade online image editor with advanced photo manipulation capabi
 
 ## Live Demo
 
-Check out the live version: [https://pro-image-editor.example.com](https://image-editor.example.com)
+Check out the live version: [https://pro-image-editor.example.com](https://parvez-4321.github.io/Image-editor/)
 
 ## Installation
 
