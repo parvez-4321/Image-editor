@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Image Editor - Advanced Photo Editing Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+         <header class="header">
+            <h1><i class="fas fa-magic"></i> Pro Image Editor</h1>
+            <p class="subtitle">Professional photo editing made simple</p>
+        </header>
+        
+        <!-- Banner Ad -->
+        <div class="ad-banner-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'b978b234290478bef41049e4ca7072e3',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/b978b234290478bef41049e4ca7072e3/invoke.js"></script>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-wrapper">
+                <div class="editor-container">
+                    <!-- Upload Area (shows when no image) -->
+                    <div class="upload-area" id="uploadArea">
+                        <div class="file-upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Upload Your Image</h3>
+                            <p>Drag & drop or click to browse</p>
+                            <p class="supported-formats">Supports: JPG, PNG, GIF, WebP</p>
+                            <input type="file" id="upload" accept="image/*">
+                        </div>
+                        <div class="loading" id="loading">
+                            <i class="fas fa-spinner"></i> Processing your image...
+                        </div>
+                    </div>
+                    
+                    <!-- Canvas Area (shows when image is loaded) -->
+                    <div class="canvas-container" id="canvasContainer" style="display: none;">
+                        <div class="canvas-header">
+                            <h3><i class="fas fa-image"></i> Your Image</h3>
+                            <button class="close-btn" id="closeImage" title="Close Image">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <canvas id="canvas"></canvas>
+                        <div class="canvas-info">
+                            <span id="imageInfo">Image: 0x0 pixels</span>
+                            <span id="fileSizeInfo">Size: 0 KB</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Controls (shows when image is loaded) -->
+                    <div class="controls" id="controlsPanel" style="display: none;">
+                        <div class="control-section">
+                            <h4><i class="fas fa-expand-arrows-alt"></i> Dimensions</h4>
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="width">Width (px)</label>
+                                    <input type="number" id="width" value="400" min="100" max="2000">
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="height">Height (px)</label>
+                                    <input type="number" id="height" value="400" min="100" max="2000">
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="ratio">Aspect Ratio</label>
+                                    <select id="ratio">
+                                        <option value="free">Free</option>
+                                        <option value="1:1">1:1 (Square)</option>
+                                        <option value="4:3">4:3</option>
+                                        <option value="16:9">16:9</option>
+                                        <option value="3:2">3:2</option>
+                                        <option value="9:16">9:16</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h4><i class="fas fa-shapes"></i> Shape & Style</h4>
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="shape">Shape</label>
+                                    <select id="shape">
+                                        <option value="rectangle">Rectangle</option>
+                                        <option value="square">Square</option>
+                                        <option value="circle">Circle</option>
+                                        <option value="rounded">Rounded</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="radius">Border Radius</label>
+                                    <input type="range" id="radius" min="0" max="200" value="0">
+                                    <div class="value-display">Value: <span id="radius-value">0</span>px</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="borderWidth">Border Width</label>
+                                    <input type="range" id="borderWidth" min="0" max="20" value="0">
+                                    <div class="value-display">Value: <span id="border-value">0</span>px</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h4><i class="fas fa-adjust"></i> Adjustments</h4>
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="brightness">Brightness</label>
+                                    <input type="range" id="brightness" min="0" max="200" value="100">
+                                    <div class="value-display">Value: <span id="brightness-value">100</span>%</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="contrast">Contrast</label>
+                                    <input type="range" id="contrast" min="0" max="200" value="100">
+                                    <div class="value-display">Value: <span id="contrast-value">100</span>%</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="saturation">Saturation</label>
+                                    <input type="range" id="saturation" min="0" max="200" value="100">
+                                    <div class="value-display">Value: <span id="saturation-value">100</span>%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h4><i class="fas fa-palette"></i> Effects</h4>
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="blur">Blur</label>
+                                    <input type="range" id="blur" min="0" max="10" value="0" step="0.1">
+                                    <div class="value-display">Value: <span id="blur-value">0</span>px</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="sepia">Sepia</label>
+                                    <input type="range" id="sepia" min="0" max="100" value="0">
+                                    <div class="value-display">Value: <span id="sepia-value">0</span>%</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="grayscale">Grayscale</label>
+                                    <input type="range" id="grayscale" min="0" max="100" value="0">
+                                    <div class="value-display">Value: <span id="grayscale-value">0</span>%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h4><i class="fas fa-font"></i> Watermark</h4>
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="watermark">Watermark Text</label>
+                                    <input type="text" id="watermark" placeholder="Enter watermark text">
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="watermarkSize">Text Size</label>
+                                    <input type="range" id="watermarkSize" min="12" max="72" value="24">
+                                    <div class="value-display">Value: <span id="watermark-size-value">24</span>px</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="watermarkOpacity">Opacity</label>
+                                    <input type="range" id="watermarkOpacity" min="0" max="100" value="50">
+                                    <div class="value-display">Value: <span id="watermark-opacity-value">50</span>%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons (shows when image is loaded) -->
+                    <div class="action-buttons" id="actionButtons" style="display: none;">
+                        <div class="button-group">
+                            <button id="rotate" class="btn btn-outline">
+                                <i class="fas fa-redo"></i> Rotate 90°
+                            </button>
+                            <button id="flipH" class="btn btn-outline">
+                                <i class="fas fa-exchange-alt"></i> Flip H
+                            </button>
+                            <button id="flipV" class="btn btn-outline">
+                                <i class="fas fa-arrows-alt-v"></i> Flip V
+                            </button>
+                            <button id="reset" class="btn btn-outline">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button id="download" class="btn btn-primary">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button id="downloadJPG" class="btn btn-secondary">
+                                <i class="fas fa-file-image"></i> JPG
+                            </button>
+                            <button id="downloadPNG" class="btn btn-secondary">
+                                <i class="fas fa-file-image"></i> PNG
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Features Section -->
+                <div class="features-section">
+                    <h3><i class="fas fa-star"></i> Features</h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-crop"></i>
+                            <h4>Smart Cropping</h4>
+                            <p>Intelligent aspect ratio detection</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-filter"></i>
+                            <h4>Advanced Filters</h4>
+                            <p>Professional photo effects</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>Mobile Friendly</h4>
+                            <p>Works on all devices</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Privacy First</h4>
+                            <p>No uploads to servers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Social Bar with Ad -->
+        <div class="social-bar">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-pinterest"></i></a>
+            </div>
+            <script type='text/javascript' src='//pl27377716.profitableratecpm.com/f8/08/a9/f808a9ffe42f9389cf1b403365fbb9e7.js'></script>
+        </div>
+        
+        <footer class="footer">
+            <p>&copy; 2024 Pro Image Editor. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </footer>
+    </div>
+
+    <!-- Popunder Ad -->
+    <script type='text/javascript' src='//pl27372832.profitableratecpm.com/5c/35/40/5c35408c73d6df1461f2db9eb296048f.js'></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
